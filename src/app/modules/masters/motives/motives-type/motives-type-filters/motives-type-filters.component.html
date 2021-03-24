@@ -1,0 +1,70 @@
+<div class="p-grid p-mt-4 p-align-center vertical-container p-p-3" *ngIf="expanded">
+
+
+    <div class="p-col-12 p-md-4 p-lg-4 p-fluid">
+        <div class="p-field">
+            <span class="p-float-label">
+                <input [(ngModel)]="filters.name" name="name" id="name" (keypress)="_validations.keyPressOnlyLetters($event);" (paste)="_validations.noPaste($event)" type="text" maxlength="100" pInputText>
+                <label for="float-input">Nombre</label>
+            </span>
+        </div>        
+    </div>
+
+    <div class="p-col-12 p-md-4 p-lg-4 p-fluid">
+        <div class="p-field">
+            <span class="p-float-label">
+                <input [(ngModel)]="filters.abbreviation" name="abbreviation" id="abbreviation" (keypress)="_validations.keyPressOnlyLetters($event);" (paste)="_validations.noPaste($event)" type="text" maxlength="3" pInputText>
+                <label for="float-input">Abreviatura</label>
+            </span>
+        </div>        
+    </div>
+    <div class="p-col-12 p-md-4 p-lg-4 p-fluid">
+        <div class="p-field">
+            <span class="p-float-label">
+                <p-dropdown [options]="status" id="status" appendTo="body" [(ngModel)]="filters.active" [showClear]="true"
+                ></p-dropdown>
+                <label for="status">Estatus</label>
+            </span>
+        </div>  
+    </div>  
+
+    <div class="p-col-12 p-md-4 p-lg-4 p-fluid">
+        <div class="p-field">
+            <span class="p-float-label">
+                <p-dropdown inputId="system" [(ngModel)]="systemId" [autoDisplayFirst]="false" [options]="systems.value"  optionLabel="name"   
+                (onChange)="onSystemSelected($event.value)"
+                [showClear]="true" ></p-dropdown>
+    
+                <label for="status">Sistemas</label>
+            </span>
+        </div>  
+    </div>  
+    <div class="p-col-12 p-md-4 p-lg-4 p-fluid">
+        <div class="p-field">
+            <span class="p-float-label">
+                <p-dropdown inputId="app" [autoDisplayFirst]="false" [options]="apps.value"  optionLabel="name" 
+                (onChange)="onAppSelected($event.value)"
+                [disabled]="!systemSelected" [showClear]="true" ></p-dropdown>
+    
+                <label for="status">Aplicaciones</label>
+            </span>
+        </div>  
+    </div>  
+    <div class="p-col-12 p-md-4 p-lg-4 p-fluid">
+        <div class="p-field">
+            <span class="p-float-label">
+                <p-dropdown inputId="module" [autoDisplayFirst]="false" [options]="modules.value"  optionLabel="name" 
+                (onChange)="onModuleSelected($event.value)"
+                [disabled]="!appSelected" [showClear]="true"
+                [filter]="true" filterBy="name"></p-dropdown>
+    
+                <label for="status">Modulos</label>
+            </span>
+        </div>  
+    </div>  
+
+    <div class="p-col-12 p-md-3 p-lg-12 p-d-flex p-jc-end">
+        <button pButton pRipple label="Buscar" [disabled]="loading" (click)="search()" icon="pi pi-search" class="p-button-info p-mr-2"></button>
+        <button pButton pRipple label="Limpiar" [disabled]="loading" (click)="clearFilters()" icon="pi pi-ban" class="p-button-secondary"></button>
+    </div>
+</div>

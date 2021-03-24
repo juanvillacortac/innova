@@ -1,0 +1,20 @@
+:host ::ng-deep {  
+    .p-menu .p-menuitem-link{
+        height: 5rem;
+    }
+
+    .p-menu{
+        width: 100%;
+    }
+
+    body .p-menu .p-menu-list > .p-submenu-header {
+        display: none;
+    }
+    body .p-menu .p-menuitem.p-menuitem-active > .p-menuitem-link {
+        background-color: blue;
+    }
+
+    .p-menu.p-component.p-menu-overlay{
+        left: 130px!important;
+    }
+}

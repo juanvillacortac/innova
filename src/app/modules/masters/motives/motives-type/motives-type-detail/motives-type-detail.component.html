@@ -1,0 +1,57 @@
+
+<h2 class="p-m-0">{{formTitle}}</h2>
+<hr/>
+<div class="p-grid">
+    <div class="p-col-12"> 
+        <div class="card">       
+            <div class="p-fluid p-grid p-formgrid"  [formGroup]="motivesTypeForm">
+                <div class="p-field p-col-12 p-md-12 p-sm-12">                
+                    <label for="input">Nombre <span [ngStyle]="{'color':'red'}">*</span></label>
+                    <input pInputText #name maxlength="30" (keypress)="_validations.keyPressOnlyLetters($event);" (paste)="_validations.noPaste($event)" formControlName="name" required />                     
+                    <!-- <small class="p-invalid" *ngIf="submitted && (!_dataCountry.name || !_dataCountry.name.trim())">El nombre es requerido</small> -->
+                </div>
+                <div class="p-field p-col-12 p-md-12 p-sm-12">                
+                    <label for="input">Abreviatura <span [ngStyle]="{'color':'red'}">*</span></label>
+                    <input pInputText #name maxlength="3" (keypress)="_validations.keyPressOnlyLetters($event);" (paste)="_validations.noPaste($event)" formControlName="abbreviation" required />
+                   <!-- <small class="p-invalid" *ngIf="submitted && (!_dataCountry.name || !_dataCountry.name.trim())">El nombre es requerido</small> -->
+                </div>
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="dropdown">Estatus <span [ngStyle]="{'color':'red'}">*</span></label>
+                        <p-dropdown [options]="status" appendTo="body" [autoDisplayFirst]="false" [disabled]="!isEdit" formControlName="statusValue">
+                        </p-dropdown>
+                </div>      
+
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="dropdown">Sistemas <span [ngStyle]="{'color':'red'}">*</span></label>
+                    <p-dropdown inputId="system" [autoDisplayFirst]="false" [options]="systems.value" formControlName="idSystem" optionLabel="name"   
+                    (onChange)="onSystemSelected($event.value)"
+                    [disabled]="isEdit" [showClear]="true" ></p-dropdown>
+                </div>   
+
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="dropdown">Aplicaciones <span [ngStyle]="{'color':'red'}">*</span></label>
+                    <p-dropdown inputId="app" [autoDisplayFirst]="false" [options]="apps.value" formControlName="idApp" optionLabel="name" 
+                    (onChange)="onAppSelected($event.value)"
+                    [disabled]="isEdit || !systemSelected" [showClear]="true" ></p-dropdown>
+                </div>  
+                
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="dropdown">Modulos <span [ngStyle]="{'color':'red'}">*</span></label>
+                    <p-dropdown inputId="module" [autoDisplayFirst]="false" [options]="modules.value" formControlName="idModule" optionLabel="name" 
+                    [disabled]="isEdit || !appSelected" [showClear]="true"
+                    [filter]="true" filterBy="name"></p-dropdown>
+                </div>  
+            </div>
+
+            <div class="p-fluid p-grid p-formgrid">
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <span [ngStyle]="{'color':'red'}">(*) Campos obligatorios</span>
+                </div> 
+                <div class="p-field p-col-12 p-md-12">
+                    <button pButton type="button" pRipple  class="p-button-outlined p-button-success" [disabled]="!motivesTypeForm.valid || motivesTypeAdded" (click)="onSave()"label="Guardar"></button>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <p-toast position="top-right" key="motives-type"></p-toast>
+</div>

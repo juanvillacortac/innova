@@ -1,0 +1,23 @@
+<p-dialog (onShow)="onShow()" (onHide)="onHide()" header="Número de teléfono" [(visible)]="visible"  [style]="{width:'40%'}" [modal]="true">
+    <div [formGroup]="form" class="p-fluid p-formgrid p-grid p-p-2">        
+        <div class="p-field p-col-12 p-sm-12 p-md-12 p-lg-12 p-xl-4">
+            <label>Código<span [ngStyle]="{'color':'red'}">*</span></label>
+            <p-dropdown formControlName="idCountry" [(ngModel)]="contactNumber.idCountry" [options]="countryCodeList" placeholder="Venezuela (+58)" appendTo="body" required></p-dropdown>            
+            <!-- <small class="p-invalid" *ngIf="submitted && contactNumber.countryCode <= 0">El Código del país es requerido</small> -->
+        </div>
+        <div class="p-field p-col-12 p-sm-12 p-md-12 p-lg-12 p-xl-4">
+            <label>Número de teléfono<span [ngStyle]="{'color':'red'}">*</span></label>
+            <p-inputNumber formControlName="number" [(ngModel)]="contactNumber.number" maxlength="10" [useGrouping]="false" placeholder="4121234567"></p-inputNumber>
+            <!-- <small class="p-invalid" *ngIf="submitted && contactNumber.number">El número de teléfono es requerido.</small> -->
+        </div>
+        <div class="p-field p-col-12 p-sm-12 p-md-12 p-lg-12 p-xl-4">
+            <label>Tipo<span [ngStyle]="{'color':'red'}">*</span></label>
+            <p-dropdown formControlName="type" [(ngModel)]="contactNumber.idType" [options]="contactNumberType" placeholder="Tipo" appendTo="body" required></p-dropdown>
+            <!-- <small class="p-invalid" *ngIf="submitted && contactNumber.idType  <= 0">El tipo es requerido</small> -->
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="submit()" label="Aceptar" styleClass="p-button-info p-mr-2" [disabled]="!form.valid"></p-button>
+        <p-button icon="pi pi-ban" (click)="visible=false" label="Cancelar" styleClass="p-button-secondary"></p-button>
+    </ng-template>
+</p-dialog>

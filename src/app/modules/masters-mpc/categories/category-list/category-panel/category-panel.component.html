@@ -1,0 +1,28 @@
+<div class="p-grid p-mt-4 p-align-center vertical-container p-p-3" *ngIf="expanded">
+    <div class="p-col-12 p-md-3 p-lg-12 p-d-flex" *ngIf="showCategoryP">
+        <span>Categoría padre: {{CategoryParent.name}}</span>
+    </div>
+    <div class="p-col-12 p-md-4 p-lg-3">
+        <div class="p-inputgroup">
+            <span class="p-float-label">
+                <input [(ngModel)]="_category.name" [class]="submitted && (!_category.name || !_category.name.trim()) ? 'ng-dirty ng-invalid' : ''" name="name" id="name" (keypress)="_validations.keyPressForGtin($event);" oninput="this.value = this.value.length == 1 ? this.value.charAt(0).toUpperCase().trim() : this.value.charAt(0).toUpperCase().trim() + this.value.substr(1).toLowerCase()" (paste)="_validations.noPaste($event)" type="text" maxlength="500" pInputText (keyup.enter)="saveCategory()">
+                <label>Nombre <span [ngStyle]="{'color':'red'}">*</span></label>
+                
+            </span>
+            
+        </div>
+        <small class="p-invalid" style="position: absolute;" *ngIf="submitted && (!_category.name || !_category.name.trim())">El nombre es requerido</small>
+    </div>
+    <div class="p-col-12 p-md-4 p-lg-3 p-fluid">
+        <p-dropdown [options]="status" [disabled]="_category.id <= 0" appendTo="body" [(ngModel)]="_category.active" placeholder="Estatus">
+        </p-dropdown>
+    </div>
+    <br>
+    <div class="p-field">
+        <span [ngStyle]="{'color':'red'}">(*) Campos obligatorios</span>
+    </div>
+    <div class="p-col-12 p-md-3 p-lg-12 p-d-flex p-jc-end">
+        <button pButton pRipple label="Guardar" (click)="saveCategory()" [disabled]="loading" icon="pi pi-save" class="p-button-info p-mr-2"></button>
+        <button pButton pRipple label="Limpiar" [disabled]="loading" (click)="clearModel()" icon="pi pi-ban" class="p-button-secondary"></button>
+    </div>
+</div>

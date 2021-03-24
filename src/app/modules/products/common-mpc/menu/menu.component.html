@@ -1,0 +1,22 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <barproduct [(idproduct)]="idproduct" [(_statusproduct)]="_statusproduct" [(_product)]="_product" [(complete)]="completedata"></barproduct>
+    </div>
+    <div class="p-col-12" *ngIf="!mobile">
+        <button type="button" pButton icon="pi pi-bars" label="Menú" (click)="menu.toggle($event)"></button>
+        <p-menu #menu [popup]="true" [model]="items"></p-menu>
+    </div>
+</div>
+<div class="p-grid">
+    <div class="p-col-2" *ngIf="mobile">
+        <p-menu [model]="items" class="p-fluid"></p-menu>
+        <!-- <menu-mpc [(idproduct)]="idproduct"></menu-mpc> -->
+    </div>
+    <div [class]="mobile == false ? 'p-col-12' : 'p-col-10'">
+        <general-section [(idproduct)]="idproduct" *ngIf="indmenu==menuproduct.General" (refreshchanges)="refreshchanges()"></general-section>
+        <product-complementary [(idproduct)]="idproduct" *ngIf="indmenu==menuproduct.Complementary" (refreshchanges)="refreshchanges()" (clearchanges)="clearchanges()"></product-complementary>
+        <publications-list [(idproduct)]="idproduct" *ngIf="indmenu==menuproduct.Publications"></publications-list>
+    </div>
+    
+</div>
+

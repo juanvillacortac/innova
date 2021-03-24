@@ -1,0 +1,44 @@
+<p-sidebar [(visible)]="showDialog" (onShow)="ngOnInit()" (onHide)="hideDialog()" [blockScroll]="false" [showCloseIcon]="true"  [dismissible]="false" position="right" styleClass="p-sidebar-md" [style]="{'overflow': 'scroll'}">
+    <h5 class="p-m-0">Moneda</h5>
+<hr/>
+<div class="p-grid">
+    <div class="p-col-12"> 
+        <div class="card">       
+            <div class="p-fluid p-grid p-formgrid">
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="active">Moneda <span [ngStyle]="{'color':'red'}">*</span></label>
+                    <input id="float-input"  [(ngModel)]="_coin.name" [class]="submitted && (!_coin.name || !_coin.name.trim()) ? 'ng-dirty ng-invalid' : ''"  lettersOnly type="text" pInputText oninput="this.value = this.value.length == 1 ? this.value.charAt(0).toUpperCase().trim() : this.value.charAt(0).toUpperCase().trim() + this.value.substr(1).toLowerCase()" maxlength="50" (keyup.enter)="submit()" (paste)="_validations.noPaste($event)" >                   
+                    <small class="p-invalid" *ngIf="submitted && (!_coin.name || !_coin.name.trim())">El nombre es requerido</small>
+                </div>
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="active">Tipo moneda <span [ngStyle]="{'color':'red'}">*</span></label>
+                    <p-dropdown  [options]="coinType" [(ngModel)]="_coin.idType" placeholder="Tipo moneda" appendTo="body" [class]="submitted && _coin.idType <= 0 ? 'ng-dirty ng-invalid' : ''" (keyup.enter)="submit()" ></p-dropdown>
+                  <small class="p-invalid" *ngIf="submitted && _coin.idType <= 0">El tipo de moneda es requerido</small>
+                </div>
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="active">Simbolo <span [ngStyle]="{'color':'red'}">*</span> </label>               
+                    <input id="float-input" [(ngModel)]="_coin.symbology" [class]="submitted && (!_coin.symbology || !_coin.symbology.trim()) ? 'ng-dirty ng-invalid' : ''"   type="text" pInputText oninput="this.value = this.value.length == 1 ? this.value.charAt(0).toUpperCase().trim() : this.value.charAt(0).toUpperCase().trim() + this.value.substr(1).toLowerCase()" maxlength="5" (keyup.enter)="submit()" (paste)="_validations.noPaste($event)">
+                    <small class="p-invalid" *ngIf="submitted && (!_coin.symbology || !_coin.symbology.trim())">El simbolo es requerido</small>
+                </div>
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="abbreviation">Abreviatura </label>               
+                    <input id="float-input" [(ngModel)]="_coin.abbreviation" type="text" lettersOnly pInputText oninput="this.value = this.value.toUpperCase().trim()" maxlength="3" (keyup.enter)="submit()" (paste)="_validations.noPaste($event)">
+                    <small class="p-invalid" *ngIf="submitted && _coin.name.trim().toLocaleUpperCase() == _coin.abbreviation.trim()">La abreviatura debe ser diferente al nombre</small>
+                </div>
+     
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="active">Activo</label>
+                    <!-- <p-checkbox  name="active" [(ngModel)]="_coin.active" [binary]="true" [disabled]="_coin.id<=0"></p-checkbox> -->
+                    <p-dropdown name="active"  [options]="statuslist" appendTo="body" [(ngModel)]="_coin.active" placeholder="Estatus" [disabled]="_coin.id<=0" (keyup.enter)="submit()" ></p-dropdown>
+                </div>
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <span [ngStyle]="{'color':'red'}">(*) Campos obligatorios</span>
+                </div> 
+                <div class="p-field p-col-12 p-md-12">
+                        <button pButton pRipple label="Guardar" (click)="submit()" icon="pi pi-save" class="p-button-info p-mr-2"></button>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+</p-sidebar>

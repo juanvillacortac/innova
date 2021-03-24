@@ -1,0 +1,39 @@
+<p-sidebar [(visible)]="showDialog" (onShow)="ngOnInit()" (onHide)="hideDialog()" [blockScroll]="false" [showCloseIcon]="true"  [dismissible]="false" position="right" styleClass="p-sidebar-md" [style]="{'overflow': 'scroll'}">
+    <h5 class="p-m-0">Marca</h5>
+<hr/>
+<div class="p-grid">
+    <div class="p-col-12"> 
+        <div class="card">       
+            <div class="p-fluid p-grid p-formgrid">
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="active">Marca <span [ngStyle]="{'color':'red'}">*</span></label>
+                    <input id="float-input" [class]="submitted && (!_brand.name || !_brand.name.trim()) ? 'ng-dirty ng-invalid' : ''" [(ngModel)]="_brand.name" noneSpecialCharacters type="text" pInputText oninput="this.value = this.value.length == 1 ? this.value.charAt(0).toUpperCase().trim() : this.value.charAt(0).toUpperCase().trim() + this.value.substr(1).toLowerCase()" maxlength="50" (keyup.enter)="submit()" (paste)="_validations.noPaste($event)" >                   
+                    <small class="p-invalid" *ngIf="submitted && (!_brand.name || !_brand.name.trim())">El nombre es requerido</small>
+                </div>
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="active">Clase de marca <span [ngStyle]="{'color':'red'}">*</span></label>
+                    <p-dropdown  [options]="brandClass" [(ngModel)]="_brand.idClass" placeholder="Clase de marca" appendTo="body" [class]="submitted && _brand.idClass <= 0 ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+                  <small class="p-invalid" *ngIf="submitted && _brand.idClass <= 0">La clase de marca es requerida</small>
+                </div>
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="abbreviation">Abreviatura </label>               
+                    <input id="float-input" [(ngModel)]="_brand.abbreviation" type="text" noneSpecialCharacters pInputText oninput="this.value = this.value.toUpperCase().trim()" maxlength="3" (keyup.enter)="submit()" (paste)="_validations.noPaste($event)">
+                    <small class="p-invalid" *ngIf="submitted && _brand.name.trim().toLocaleUpperCase() == _brand.abbreviation.trim()">La abreviatura debe ser diferente al nombre</small>
+                </div>
+     
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="active">Activo</label>
+                    <!-- <p-checkbox  name="active" [(ngModel)]="_brand.active" [binary]="true" [disabled]="_brand.id<=0"></p-checkbox> -->
+                    <p-dropdown name="active"  [options]="statuslist" appendTo="body" [(ngModel)]="_brand.active" placeholder="Estatus" [disabled]="_brand.id<=0"></p-dropdown>
+                </div>
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <span [ngStyle]="{'color':'red'}">(*) Campos obligatorios</span>
+                </div> 
+                <div class="p-field p-col-12 p-md-12">
+                        <button pButton pRipple label="Guardar" (click)="submit()" icon="pi pi-save" class="p-button-info p-mr-2"></button>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+</p-sidebar>

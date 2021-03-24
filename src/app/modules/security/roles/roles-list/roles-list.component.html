@@ -1,0 +1,62 @@
+<div class="card">
+            <button *ngIf="this.userPermissions.allowed(this.permissionsIDs.CREATE_ROLE_PERMISSION_ID)"  pButton pRipple label="Nuevo rol" icon="pi pi-plus" class="p-button-outlined p-button-success p-mb-3" (click)="openNew()" ></button>
+  <p-table #dt [columns]="displayedColumns" [rowHover]="true" [value]="roleList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+  currentPageReportTemplate="Mostrando {first} hasta {last} de {totalRecords} registros" [rowsPerPageOptions]="[10,25,50]"styleClass="p-datatable-responsive-demo">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">Roles</h5>
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+            </span>
+        </div> 
+  </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-role let-columns="columns">
+        <tr>
+            <ng-container *ngFor="let col of columns">
+                <td [ngStyle]="{'display': col.display }">
+                    <span class="p-column-title">{{col.header}}</span>
+                    <span *ngIf="col.field === 'isActive' && role[col.field] === true; else second" [class]="'status-badge status-active'">ACTIVO</span>
+                    <ng-template #second>
+                        <span *ngIf="col.field === 'isActive' && role[col.field] === false; else third" [class]="'status-badge status-inactive'">INACTIVO</span>
+                    </ng-template>
+                    <ng-template #third>
+                        <span *ngIf="col.field === 'softwares'; else fourth">
+                            <span  *ngFor="let sofware of role[col.field]">
+                                <div class="p-field">
+                                    <span [class]="'time'">{{sofware.name}}</span>
+                                </div>
+                            </span>
+                        </span>
+                    </ng-template>
+                    <ng-template #fourth>
+                        <span>{{role[col.field]}} </span>
+                    </ng-template>
+                    <ng-container *ngIf="this.userPermissions.allowed(this.permissionsIDs.UPDATE_ROLE_PERMISSION_ID)">
+                    <button *ngIf="col.field === 'edit'" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-mr-2" (click)="onEdit(role)"></button>
+                    </ng-container>    
+                </td>
+            </ng-container>
+              <!--  <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-mr-2" (click)="onEdit(role)"></button>-->
+                <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" ></button>(click)="deleteProduct(product)" -->
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+          </ng-template>
+          <ng-template pTemplate="paginatorright">
+          </ng-template>
+  </p-table>
+  <p-toast position="top-right"></p-toast>
+
+  <p-sidebar [(visible)]="shownEditRole" [blockScroll]="false" [showCloseIcon]="true"  [dismissible]="false" position="right"  *ngIf="shownEditRole" styleClass="p-sidebar-lg">
+    <app-role-detail [(roleSelected)]="roleSelected"  (onHideEditForm)="childCallBack($event)" ></app-role-detail>
+  </p-sidebar>
+  </div>

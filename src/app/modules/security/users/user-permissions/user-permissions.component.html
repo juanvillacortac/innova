@@ -1,0 +1,50 @@
+<h2>Permisos</h2>
+<div class="p-grid">
+    <div class="p-col-12"> 
+        <div class="card">
+                <div class="p-fluid p-grid p-formgrid"  [formGroup]="permissionsForm">
+                    <div class="p-formgroup-inline p-col-12 p-md-12">
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="system">Sistema</label>
+                            <p-dropdown [options]="systems" formControlName="idSystem" id="system" placeholder="Selecciona una sistema" [showClear]="true" (onChange)="onSystemSelected($event.value)"></p-dropdown>
+                        </div>
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="app">Aplicación</label>
+                            <p-dropdown [options]="apps" id="app" formControlName="idApp" placeholder="Selecciona una aplicación" [showClear]="true" (onChange)="onAppSelected($event.value)"></p-dropdown>
+                        </div>
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="office">Sucursal</label>
+                            <p-dropdown formControlName="idOffice" id="office" [options]="offices" placeholder="Selecciona una sucursal" [showClear]="true" (onChange)="onOfficeSelected($event.value)"></p-dropdown>
+                        </div>  
+                    </div>      
+                </div>
+                <div class="card" *ngIf="showModules">
+                    <h5>Módulos</h5>
+                    <div class="p-fluid p-grid p-formgrid">    
+                        <div class="p-fluid p-col-12 p-md-12">
+                            <table>
+                                <td class="p-col-12 p-md-6">
+                                    <div class="p-field">
+                                        <p-tree [value]="modules" selectionMode="single" (onNodeSelect)="onModuleSelected($event.node)" [styleClass]="'custom-ui-tree'"> 
+                                        </p-tree>
+                                    </div>
+                                </td>
+                                <td class="p-col-12 p-md-6">
+                                    <div class="p-col-12 p-md-12">
+                                        <h3>{{selectedSubModule}}</h3>
+                                        <app-check-list [options]="permissionShowing" (onSelect)="onPermissionSelected($event)" ></app-check-list>
+                                    </div>                                   
+                                </td>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="p-fluid p-col-12 p-md-3">
+                        <div class="buttons">
+                            <button pButton type="button" [disabled]="!permissionsForm.valid " (click)="onSave()"label="Guardar"></button>
+                        </div>
+                    </div>  
+                </div>
+            </div> 
+    </div>
+    <p-toast position="top-right" key="user-permissions"></p-toast>
+</div>

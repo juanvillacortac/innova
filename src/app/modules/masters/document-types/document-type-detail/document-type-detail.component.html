@@ -1,0 +1,59 @@
+
+<h2 class="p-m-0">{{formTitle}}</h2>
+<hr/>
+<div class="p-grid">
+    <div class="p-col-12"> 
+        <div class="card">       
+            <div class="p-fluid p-grid p-formgrid"  [formGroup]="documentTypeForm">
+                <div class="p-field p-col-12 p-md-12 p-sm-12">                
+                    <label for="input">Nombre <span [ngStyle]="{'color':'red'}">*</span></label>
+                        <input pInputText #name maxlength="30" (keypress)="_validations.keyPressOnlyLetters($event);" (paste)="_validations.noPaste($event)" 
+                        formControlName="name" required />                        
+                    <!-- <small class="p-invalid" *ngIf="submitted && (!_dataCountry.name || !_dataCountry.name.trim())">El nombre es requerido</small> -->
+                </div>
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="input">Identificador <span [ngStyle]="{'color':'red'}">*</span></label>
+                        <input pInputText #name maxlength="1" (keypress)="_validations.keyPressOnlyLetters($event);" (paste)="_validations.noPaste($event)" 
+                        formControlName="identifier" required />
+                       <!-- <small class="p-invalid" *ngIf="submitted && (!_dataCountry.name || !_dataCountry.name.trim())">El nombre es requerido</small> -->   
+                </div>
+
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="dropdown">Alfanumérico <span [ngStyle]="{'color':'red'}">*</span></label>
+                        <p-dropdown [options]="alphanumeric" appendTo="body" [autoDisplayFirst]="false"  formControlName="indAlphanumeric">
+                        </p-dropdown>
+                </div>    
+
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="dropdown">Estatus <span [ngStyle]="{'color':'red'}">*</span></label>
+                        <p-dropdown [options]="status" appendTo="body" [autoDisplayFirst]="false" [disabled]="!isEdit" formControlName="statusValue">
+                        </p-dropdown>
+                </div>       
+                
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="dropdown">Tipo de entidad <span [ngStyle]="{'color':'red'}">*</span></label>
+                        <p-dropdown [options]="entityTypes.value" appendTo="body" [showClear]="true" optionLabel="name"
+                         [autoDisplayFirst]="false" formControlName="selectedEntityType">
+                        </p-dropdown>
+                </div>  
+                <div class="p-field p-col-12 p-md-12 p-sm-12">
+                    <label for="dropdown">País <span [ngStyle]="{'color':'red'}">*</span></label>
+                        <p-dropdown [options]="countries.value" appendTo="body" [showClear]="true" optionLabel="name"
+                         [autoDisplayFirst]="false" formControlName="selectedCountry">
+                        </p-dropdown>
+                </div>   
+
+            </div>
+
+        <div class="p-fluid p-grid p-formgrid">
+            <div class="p-field p-col-12 p-md-12 p-sm-12">
+                <span [ngStyle]="{'color':'red'}">(*) Campos obligatorios</span>
+            </div> 
+            <div class="p-field p-col-12 p-md-12">
+                    <button pButton pRipple icon="pi pi-save" class="p-button-info p-mr-2"[disabled]="!documentTypeForm.valid" (click)="onSave()"label="Guardar"></button>
+            </div> 
+        </div>
+    </div>
+    </div>
+    <p-toast position="top-right" key="document-type"></p-toast>
+</div>
